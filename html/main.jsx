@@ -21,7 +21,10 @@ class Signin extends React.Component {
             password: this.state.password
         })
         .then(function(response) {
-            console.log(response);
+            if(response.data== 'success'){
+                window.location.assign('http://localhost:7777/home')
+            }
+            // console.log(response);
         })
         .catch(function(error){
             console.log(error);
@@ -55,7 +58,41 @@ class Signin extends React.Component {
 }
 
 class Signup extends React.Component{
-  render() {
+    constructor(props){
+        super(props);
+        this.signUp = this.signUp.bind(this)
+        this.handleNameChange = this.handleNameChange.bind(this);
+        this.handleEmailChange = this.handleEmailChange.bind(this);
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+        this.state = {
+            name:'',
+            email:'',
+            password:''
+        };
+    }
+    signUp(){
+        axios.post('/signup', {
+            name: this.state.name,
+            email: this.state.email,
+            password: this.state.password
+        })
+        .then(function(response){
+            console.log(response);
+        })
+        .catch(function(error){
+            console.log(error)
+        });
+    }
+    handleNameChange(e){
+        this.setState({name:e.target.value})
+    }
+    handleEmailChange(e){
+        this.setState({email:e.target.value})
+    }
+    handlePasswordChange(e){
+        this.setState({password:e.target.value})
+    }
+    render() {
       return (
         <div>
           <form className="form-signin">
